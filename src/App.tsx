@@ -1,18 +1,25 @@
-import DataTable from './components/DataTable'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import DataTable from "./components/DataTable";
+import Dashboard from "./components/Dashboard";
 
+function App() {
+  return (
+    <Router>
+      <div className="flex">
+        <Navbar />
 
-export default function App() {
-    return (
-        <div className="min-h-screen p-6">
-            <div className="max-w-6xl mx-auto">
-                <header className="mb-6">
-                </header>
-
-
-                <main>
-                    <DataTable />
-                </main>
-            </div>
+        <div className="flex-1 p-6">
+          <Routes>
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Routes>
+          <Routes>
+            <Route path="/products" element={<DataTable />} />
+          </Routes>
         </div>
-    )
+      </div>
+    </Router>
+  );
 }
+
+export default App;

@@ -9,21 +9,29 @@ export async function fetchProducts(limit = 1000): Promise<Product[]> {
     let all: Product[] = []
     let skip = 0
 
+    try {
+        while (all.length < limit) {
+            const toFetch = Math.min(perRequest, limit - all.length)
 
-    // We'll fetch in chunks to avoid single large request issues
-    while (all.length < limit) {
-        const toFetch = Math.min(perRequest, limit - all.length)
-        const res = await axios.get(`${BASE}/products`, {
-            params: { limit: toFetch, skip },
-        })
-        const products: Product[] = res.data.products
-        if (!products || products.length === 0) break
-        all = all.concat(products)
-        skip += products.length
-        // safety to prevent infinite loop if API returns less
-        if (products.length < toFetch) break
+            const res = await axios.get(`${BASE}/products`, {
+                params: { limit: toFetch, skip },
+                validateStatus: (status) => status === 200, 
+            });
+
+            const products: Product[] = res.data?.products || [];
+
+            if (!products.length) break;
+
+            all = all.concat(products);
+            skip += products.length;
+
+            if (products.length < toFetch) break;
+        }
+        
+        return all;
+
+    } catch (error: any) {
+        console.error("Error fetching products:", error.message || error);
+        throw new Error("Failed to fetch products from API (status not 200).");
     }
-
-
-    return all
 }

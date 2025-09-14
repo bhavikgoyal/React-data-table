@@ -19,7 +19,7 @@ const DataTable: React.FC = () => {
       try {
         setLoading(true);
         setError("");
-        const data = await fetchProducts(500); // fetching large dataset
+        const data = await fetchProducts(500);
         setProducts(data);
         setFilteredProducts(data);
       } catch (err) {
@@ -50,23 +50,23 @@ const DataTable: React.FC = () => {
   );
 
   return (
-    <div className="p-4 bg-[#FFFCFB] min-h-screen">
-      <h1 className="text-xl font-bold mb-4 text-[#66615E]">Products</h1>
+    <div className="bg-[#F3F4F6] p-[10] h-[100] font-sans">
+      <h1 className="text-2xl text-black mt-[2] mb-[10]">Products</h1>
 
       {/* Filter + Page size */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-[10] gap-4">
         <input
           type="text"
-          placeholder="Filter by title, brand, category..."
+          placeholder="🔍 Search by title, brand, or category..."
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
-          className="border px-2 py-1 rounded w-1/2 text-[#66615E] placeholder-[#949392] border-[#C9C8C7] bg-white"
+          className="text-[16px] border border-gray-300 shadow-sm px-4 py-2 rounded-lg w-1/4 text-gray-700 placeholder-gray-400 bg-white focus:ring-0.5 focus:ring-1 focus:outline-none"
         />
 
         <select
           value={pageSize}
           onChange={(e) => setPageSize(Number(e.target.value) as PageSize)}
-          className="border px-2 py-1 rounded text-[#66615E] border-[#C9C8C7] bg-white"
+          className="text-[16px] border border-gray-300 shadow-sm px-4 py-2 rounded-lg text-gray-700 bg-white focus:ring-0.5 focus:ring-1 focus:outline-none"
         >
           <option value={25}>25</option>
           <option value={50}>50</option>
@@ -76,29 +76,19 @@ const DataTable: React.FC = () => {
 
       {/* Table */}
       {loading ? (
-        <p className="text-[#66615E]">Loading...</p>
+        <p className="text-gray-600">Loading...</p>
       ) : error ? (
         <p className="text-red-500">{error}</p>
       ) : (
-        <div className="border border-[#C9C8C7] rounded">
+        <div className="overflow-hidden rounded-lg shadow-lg border border-gray-200 bg-white">
           <table className="min-w-full table-fixed border-collapse">
-            <thead className="bg-[#F2F0EF] sticky top-0">
+            <thead className="bg-[#d5bdaf] text-white text-lg">
               <tr>
-                <th className="w-1/12 border border-[#C9C8C7] px-2 py-1 text-[#66615E]">
-                  ID
-                </th>
-                <th className="w-3/12 border border-[#C9C8C7] px-2 py-1 text-[#66615E]">
-                  Title
-                </th>
-                <th className="w-2/12 border border-[#C9C8C7] px-2 py-1 text-[#66615E]">
-                  Brand
-                </th>
-                <th className="w-3/12 border border-[#C9C8C7] px-2 py-1 text-[#66615E]">
-                  Category
-                </th>
-                <th className="w-3/12 border border-[#C9C8C7] px-2 py-1 text-[#66615E]">
-                  Price
-                </th>
+                <th className="text-[16px] w-1/12 px-4 py-3 text-left">ID</th>
+                <th className="text-[16px] w-3/12 px-4 py-3 text-left">Title</th>
+                <th className="text-[16px] w-2/12 px-4 py-3 text-left">Brand</th>
+                <th className="text-[16px] w-3/12 px-4 py-3 text-left">Category</th>
+                <th className="text-[16px] w-3/12 px-4 py-3 text-left">Price</th>
               </tr>
             </thead>
             <tbody>
@@ -106,21 +96,24 @@ const DataTable: React.FC = () => {
                 <tr>
                   <td
                     colSpan={5}
-                    className="text-center py-2 text-[#949392] italic"
+                    className="text-center py-6 text-gray-500 italic"
                   >
                     No products found
                   </td>
                 </tr>
               ) : (
-                paginatedProducts.map((p) => (
-                  <tr key={p.id} className="text-center text-[#66615E]">
-                    <td className="border border-[#C9C8C7] px-2 py-1">{p.id}</td>
-                    <td className="border border-[#C9C8C7] px-2 py-1 truncate">
-                      {p.title}
-                    </td>
-                    <td className="border border-[#C9C8C7] px-2 py-1">{p.brand}</td>
-                    <td className="border border-[#C9C8C7] px-2 py-1">{p.category}</td>
-                    <td className="border border-[#C9C8C7] px-2 py-1">${p.price}</td>
+                paginatedProducts.map((p, idx) => (
+                  <tr
+                    key={p.id}
+                    className={`text-gray-700 text-sm ${
+                      idx % 2 === 0 ? "bg-[#edede9]" : "bg-white"
+                    } hover:bg-[#f5ebe0] transition-colors`}
+                  >
+                    <td className="text-[16px] px-4 py-3">{p.id}</td>
+                    <td className="text-[16px] px-4 py-3 truncate">{p.title}</td>
+                    <td className="text-[16px] px-4 py-3">{p.brand}</td>
+                    <td className="text-[16px] px-4 py-3">{p.category}</td>
+                    <td className="text-[16px] px-4 py-3">${p.price}</td>
                   </tr>
                 ))
               )}
@@ -130,21 +123,21 @@ const DataTable: React.FC = () => {
       )}
 
       {/* Pagination controls */}
-      <div className="flex justify-center items-center gap-4 mt-4 text-[#66615E]">
+      <div className="flex justify-center items-center gap-6 mt-[10] text-gray-700">
         <button
           disabled={page === 1}
           onClick={() => setPage((prev) => prev - 1)}
-          className="px-3 py-1 border rounded border-[#C9C8C7] disabled:opacity-50"
+          className="text-[15px] border-1 rounded-lg bg-[#d5bdaf] text-black disabled:cursor-not-allowed transition mr-[8]"
         >
           Prev
         </button>
-        <span>
+        <span className="text-base">
           Page {page} of {totalPages}
         </span>
         <button
           disabled={page === totalPages}
           onClick={() => setPage((prev) => prev + 1)}
-          className="px-3 py-1 border rounded border-[#C9C8C7] disabled:opacity-50"
+          className="text-[15px] border-1 rounded-lg bg-[#d5bdaf] text-black disabled:cursor-not-allowed transition ml-[8]"
         >
           Next
         </button>

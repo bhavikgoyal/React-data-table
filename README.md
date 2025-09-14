@@ -22,12 +22,29 @@ A responsive, professional-looking data table built with **React**, **TypeScript
 - **Filtering:** Client-side filtering applied to all columns (title, brand, category).  
 - **Pagination:** Simple "Prev / Next" buttons with page size selection.  
 - **Colors:** Applied your requested palette consistently.  
-- **Responsiveness:** Search box and dropdown stack on mobile screens for better UX.  
+- **Responsiveness:** Search box and dropdown stack on mobile screens for better UX. 
 
-**Assumptions:**
+---
+
+## **Assumptions:**
 
 - Dataset is small enough to fetch all at once (for demo/testing purposes).  
 - No server-side filtering/pagination required.  
+
+---
+
+## **Technologies Used**
+
+- **React 18+** (functional components)
+- **TypeScript** (static typing)
+- **Axios** (API requests)
+- **Tailwind CSS** (utility-first styling)
+- **React Router DOM** (for navigation between pages/components)
+
+---
+
+## **Styling**
+- CSS is managed using **Tailwind CSS**.  
 
 ---
 
@@ -44,3 +61,5 @@ npm run dev
 
 ## Open the app in the browser at:
 http://localhost:5173
+
+---
